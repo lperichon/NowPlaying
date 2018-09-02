@@ -17,10 +17,13 @@ let cacheAge = 0;
 app.get('/api/tweets', (req, res) => {
   if (Date.now() - cacheAge > 60000) {
     cacheAge = Date.now();
-    const params = { count: 5, result_type: "recent", q: "#nowplaying url:youtube.com -filter:retweets" };
+
+    const params = { count: 5, result_type: "recent", q: "#nowplaying url:youtube -filter:retweets" };
     
-    params.since_id = req.query.since;
-    
+    if(req.query.latitude && req.query.longitude) {
+      params.geocode = req.query.latitude + "," + req.query.longitude + ",100km"
+    }
+
     client
       .get('search/tweets', params)
       .then(timeline => {

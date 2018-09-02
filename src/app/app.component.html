@@ -6,7 +6,9 @@
   <p>This page shows #nowplaying tweets in ??? that contain a youtube link. It also allows you to post a #nowplaying tweet with a YouTube link.
 </div>
 <div *ngFor="let tweet of tweets" class="tweet-container">
-  <div class="tweet-video"></div>
+  <div class="tweet-video">
+  	<iframe *ngIf="getYouTubeUrl(tweet) != 'error'" width="560" height="315" [src]="domSanitizer.bypassSecurityTrustResourceUrl(getYouTubeUrl(tweet))" frameborder="0" allowfullscreen></iframe>
+  </div>
   <div clasS="tweet-content">
 	  <blockquote class="twitter-tweet" data-lang="en" data-cards="hidden">
 	  	<p lang="en" dir="ltr">{{tweet.text}}</p>&mdash; {{tweet.user.name}} (@{{tweet.user.screen_name}}) <a href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}">{{tweet.created_at}}</a>
