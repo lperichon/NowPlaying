@@ -1,0 +1,11 @@
+.tweet-container {
+	display: flex;
+
+}
+
+.tweet-video {
+	width: 50%;
+}
+.tweet-content {
+	width: 50%;
+}
