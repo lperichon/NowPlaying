@@ -17,7 +17,7 @@ let cacheAge = 0;
 app.get('/api/tweets', (req, res) => {
   if (Date.now() - cacheAge > 60000) {
     cacheAge = Date.now();
-    const params = { count: 5, result_type: "recent", q: "#nowplaying" };
+    const params = { count: 5, result_type: "recent", q: "#nowplaying url:youtube.com -filter:retweets" };
     
     params.since_id = req.query.since;
     
