@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TwitterService } from './twitter.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MapsAPILoader, AgmMap } from '@agm/core';
+import { GoogleMapsAPIWrapper } from '@agm/core/services';
+ 
+declare var google: any;
 
 @Component({
   selector: 'app-root',
@@ -8,15 +12,39 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-	constructor(private twitter: TwitterService, public domSanitizer: DomSanitizer) {}
-
+	geocoder:any;
   title = 'NowPlaying';
   tweets = [];
+  city;
+
+	constructor(private twitter: TwitterService, public domSanitizer: DomSanitizer,public mapsApiLoader: MapsAPILoader, private wrapper: GoogleMapsAPIWrapper) {
+		this.mapsApiLoader = mapsApiLoader;
+		this.wrapper = wrapper;
+    this.mapsApiLoader.load().then(() => {
+      this.geocoder = new google.maps.Geocoder();
+    });
+	}
 
   ngOnInit() { 
   	let self = this;
   	if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position) {
+      	var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      	self.geocoder.geocode( { 'location': latlng}, function(results, status) {
+      		if (status == 'OK') {
+      			results.forEach(function(element){
+				      element.address_components.forEach(function(element2){
+				        element2.types.forEach(function(element3){
+				          switch(element3){
+				            case 'locality':
+				              self.city = element2.long_name;
+				              break;
+				          }
+				        })
+				      });
+				    });
+      		}
+      	});
       	self.twitter.getTweets(position).subscribe(twitterResponse => {
 		  		self.tweets = twitterResponse.data.statuses
 			  });
