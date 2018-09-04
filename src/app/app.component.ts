@@ -15,7 +15,7 @@ declare var google: any;
 export class AppComponent implements OnInit {
 	geocoder:any;
   title = 'NowPlaying';
-  tweets = [];
+  items = [];
   city;
   tweetForm: FormGroup;
 
@@ -70,7 +70,12 @@ export class AppComponent implements OnInit {
 
             return t;
           }(document, 'script', 'twitter-wjs'));
-		  		self.tweets = twitterResponse.data.statuses
+		  		
+          self.items = twitterResponse.data.statuses.map(obj => ({
+              tweet: obj,
+              videoUrl: self.domSanitizer.bypassSecurityTrustResourceUrl(self.getYouTubeUrl(obj))
+          }))
+
           if ((<any>window).twttr.ready())
             (<any>window).twttr.widgets.load();
 			  });

@@ -28,13 +28,13 @@
     </div>
   </form>
 </div>
-<div *ngFor="let tweet of tweets" class="tweet-container">
+<div *ngFor="let item of items" class="tweet-container">
   <div class="tweet-video">
-  	<iframe *ngIf="getYouTubeUrl(tweet) != 'error'" width="560" height="315" [src]="domSanitizer.bypassSecurityTrustResourceUrl(getYouTubeUrl(tweet))" frameborder="0" allowfullscreen></iframe>
+  	<iframe *ngIf="item.videoUrl != 'error'" width="560" height="315" [src]="item.videoUrl" frameborder="0" allowfullscreen></iframe>
   </div>
   <div clasS="tweet-content">
 	  <blockquote class="twitter-tweet" data-lang="en" data-cards="hidden">
-	  	<p lang="en" dir="ltr">{{tweet.text}}</p>&mdash; {{tweet.user.name}} (@{{tweet.user.screen_name}}) <a href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}">{{tweet.created_at}}</a>
+	  	<p lang="en" dir="ltr">{{item.tweet.text}}</p>&mdash; {{item.tweet.user.name}} (@{{item.tweet.user.screen_name}}) <a href="https://twitter.com/{{item.tweet.user.screen_name}}/status/{{item.tweet.id_str}}">{{item.tweet.created_at}}</a>
 		</blockquote>
 	</div>
 </div>
