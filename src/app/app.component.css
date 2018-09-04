@@ -1,11 +1,12 @@
 .tweet-container {
 	display: flex;
-
+	justify-content: center;
 }
 
 .tweet-video {
-	width: 50%;
+	width: 560px;
 }
 .tweet-content {
-	width: 50%;
+	margin-left: 30px;
+	width: 500px;
 }
