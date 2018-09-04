@@ -3,6 +3,7 @@ import { TwitterService } from './twitter.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MapsAPILoader, AgmMap } from '@agm/core';
 import { GoogleMapsAPIWrapper } from '@agm/core/services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
  
 declare var google: any;
 
@@ -16,8 +17,10 @@ export class AppComponent implements OnInit {
   title = 'NowPlaying';
   tweets = [];
   city;
+  tweetForm: FormGroup;
 
-	constructor(private twitter: TwitterService, public domSanitizer: DomSanitizer,public mapsApiLoader: MapsAPILoader, private wrapper: GoogleMapsAPIWrapper) {
+
+	constructor(private twitter: TwitterService, public domSanitizer: DomSanitizer,public mapsApiLoader: MapsAPILoader, private wrapper: GoogleMapsAPIWrapper, private formBuilder: FormBuilder) {
 		this.mapsApiLoader = mapsApiLoader;
 		this.wrapper = wrapper;
     this.mapsApiLoader.load().then(() => {
@@ -27,6 +30,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() { 
   	let self = this;
+    this.tweetForm = this.formBuilder.group({
+            videoUrl: ['', Validators.required],
+            comment: ['', Validators.required]
+        });
   	if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position) {
       	var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -69,6 +76,15 @@ export class AppComponent implements OnInit {
 			  });
       });
     }	
+  }
+
+  onSubmit() {
+    // stop here if form is invalid
+    if (this.tweetForm.invalid) {
+        return;
+    }
+    console.log(this.tweetForm.controls.comment.value);
+    console.log(this.tweetForm.controls.videoUrl.value);
   }
 
   getYouTubeUrl(tweet) {

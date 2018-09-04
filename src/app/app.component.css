@@ -10,3 +10,8 @@
 	margin-left: 30px;
 	width: 500px;
 }
+
+.toolbar form {
+	display: flex;
+	justify-content: space-around;
+}

@@ -5,6 +5,29 @@
   </h1>
   <p>This page shows #nowplaying tweets in {{city}} that contain a youtube link. It also allows you to post a #nowplaying tweet with a YouTube link.
 </div>
+<div class="toolbar">
+  <form [formGroup]="tweetForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Video Url:</label>
+        <input type="text" formControlName="videoUrl" class="form-control" [ngClass]="{ 'is-invalid': tweetForm.controls.videoUrl.errors }" />
+        <div *ngIf="tweetForm.controls.videoUrl.errors" class="invalid-feedback">
+            <div *ngIf="tweetForm.controls.videoUrl.errors.required">Video URL is required</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Comment:</label>
+        <input type="text" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid': tweetForm.controls.comment.errors }" />
+        <div *ngIf="tweetForm.controls.comment.errors" class="invalid-feedback">
+            <div *ngIf="tweetForm.controls.comment.errors.required">Comment is required</div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <button class="btn btn-primary">Tweet to #NowPlaying</button>
+    </div>
+  </form>
+</div>
 <div *ngFor="let tweet of tweets" class="tweet-container">
   <div class="tweet-video">
   	<iframe *ngIf="getYouTubeUrl(tweet) != 'error'" width="560" height="315" [src]="domSanitizer.bypassSecurityTrustResourceUrl(getYouTubeUrl(tweet))" frameborder="0" allowfullscreen></iframe>
