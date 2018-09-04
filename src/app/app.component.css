@@ -1,6 +1,11 @@
+header h1, header p {
+	text-align: center;
+	margin: 10px inherit;
+}
 .tweet-container {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .tweet-video {
@@ -11,7 +16,18 @@
 	width: 500px;
 }
 
+.toolbar {
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #ccc;
+}
+
 .toolbar form {
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.toolbar input {
+	width: 500px;
 }
