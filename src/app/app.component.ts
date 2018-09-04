@@ -88,8 +88,8 @@ export class AppComponent implements OnInit {
     if (this.tweetForm.invalid) {
         return;
     }
-    console.log(this.tweetForm.controls.comment.value);
-    console.log(this.tweetForm.controls.videoUrl.value);
+    
+    this.twitter.tweet(this.tweetForm.controls.comment.value, this.tweetForm.controls.videoUrl.value);
   }
 
   getYouTubeUrl(tweet) {

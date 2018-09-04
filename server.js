@@ -5,7 +5,8 @@ const app = express();
 const client = new Twitter({
   consumer_key: 'CXVNsTDohsJaIxl0cjpuLKXYr',
   consumer_secret: 'Y49dNi2NPN9vJaPS95QnRLslOqisEuC7v934lHOfN05cVjbtDB', 
-  app_only_auth: true
+  access_token: '2834545563-QYQqm8hnLPiU3eFyAD8SGtKhfIYW7gMp8fGh8Xd',
+  access_token_secret: 'SUquQt3XC2ve3IIa8JbwMa4bsRCpZSJuCVKYAXLUTDBBT'
 });
 
 app.use(require('cors')());
@@ -34,6 +35,20 @@ app.get('/api/tweets', (req, res) => {
   } else {
     res.send(cache);
   }
+});
+
+app.post('/api/tweet', (req, res) => {
+
+  let status = "";
+
+  if(req.query.comment && req.query.videoUrl) {
+    status = req.query.comment + " #NowPlaying " + req.query.videoUrl
+  }
+
+  client
+    .post('statuses/update', { status: status })
+    .then(tweet => res.send(tweet))
+    .catch(error => res.send(error));
 });
 
 app.listen(3000, () => console.log('Server running'));
