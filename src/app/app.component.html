@@ -8,23 +8,21 @@
   <div class="toolbar">
     <form [formGroup]="tweetForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-          <label>Video Url:</label>
-          <input type="text" formControlName="videoUrl" class="form-control" [ngClass]="{ 'is-invalid': tweetForm.controls.videoUrl.errors }" />
+          <input type="text" placeholder="http://www.youtube.com/" formControlName="videoUrl" class="form-control" [ngClass]="{ 'is-invalid': tweetForm.controls.videoUrl.errors }" />
           <div *ngIf="tweetForm.controls.videoUrl.errors" class="invalid-feedback">
               <div *ngIf="tweetForm.controls.videoUrl.errors.required">Video URL is required</div>
           </div>
       </div>
 
       <div class="form-group">
-          <label>Comment:</label>
-          <input type="text" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid': tweetForm.controls.comment.errors }" />
+          <input type="text" placeholder="Comment" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid': tweetForm.controls.comment.errors }" />
           <div *ngIf="tweetForm.controls.comment.errors" class="invalid-feedback">
               <div *ngIf="tweetForm.controls.comment.errors.required">Comment is required</div>
           </div>
       </div>
       
       <div class="form-group">
-          <button class="btn btn-primary">Tweet to #NowPlaying</button>
+          <button class="btn btn-primary"><i class="fa fa-twitter"></i> Tweet to #NowPlaying</button>
       </div>
     </form>
   </div>

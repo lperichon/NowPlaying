@@ -25,9 +25,11 @@ header h1, header p {
 .toolbar form {
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
 	flex-wrap: wrap;
 }
 
-.toolbar input {
+.toolbar input[type='text'] {
+	margin-top:25px;
 	width: 500px;
 }
