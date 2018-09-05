@@ -12,29 +12,19 @@ const client = new Twitter({
 app.use(require('cors')());
 app.use(require('body-parser').json());
 
-let cache = [];
-let cacheAge = 0;
-
 app.get('/api/tweets', (req, res) => {
-  if (Date.now() - cacheAge > 60000) {
-    cacheAge = Date.now();
-
     const params = { count: 5, result_type: "recent", q: "#nowplaying url:youtube -filter:retweets" };
     
     if(req.query.latitude && req.query.longitude) {
-      params.geocode = req.query.latitude + "," + req.query.longitude + ",100km"
+      params.geocode = req.query.latitude + "," + req.query.longitude + ",50km"
     }
 
     client
       .get('search/tweets', params)
       .then(timeline => {
-        cache = timeline;
         res.send(timeline);
       })
       .catch(error => res.send(error));
-  } else {
-    res.send(cache);
-  }
 });
 
 app.post('/api/tweet', (req, res) => {
