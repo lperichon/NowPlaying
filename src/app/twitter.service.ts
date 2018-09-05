@@ -30,10 +30,6 @@ export class TwitterService {
       .set('comment', comment)
       .set('videoUrl', videoUrl);
 
-    return this.http.post<TwitterResponse>(endpoint + 'api/tweet', {}, {headers: headers, params: params})
-      .subscribe(
-          data => console.log("ok"),
-          err => console.log(err)
-      );;
+    return this.http.post<TwitterResponse>(endpoint + 'api/tweet', {}, {headers: headers, params: params});
   }
 }
